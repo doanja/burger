@@ -13,7 +13,7 @@ const initDBConnection = () => {
 
   connection.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("SQL DB Connected!");
   });
 
   return connection;
