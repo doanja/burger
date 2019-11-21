@@ -1,4 +1,4 @@
-<h1>{{title}}</h1>
+<h1 class="mb-3">{{title}}</h1>
 
 <ul class="list-group">
     <div class="row">
@@ -22,6 +22,7 @@
     </div>
 </ul>
 
+{{!-- form --}}
 <form class="mt-3" action="/api/burgers" method="POST">
     <div class="form-group">
         <textarea class="form-control" name="burger_name" type="text" rows="3"></textarea>
@@ -29,13 +30,30 @@
     <button type="submit" class="btn btn-primary mb-3">Submit</button>
 </form>
 
+{{!-- jQuery CDN --}}
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
+
+{{!-- axios CDN --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 <script>
-    // set devour to false on button click
 
-    $('.devour-button').click(() => {
-        console.log($(this).attr('id'))
+    // click listener for devour buttons
+    $('.devour-button').click(function () {
+        const id = $(this).attr('id');
+        clickDevour(id);
     })
+
+    // function to send a put request using axios
+    const clickDevour = (id) => {
+        // send put request to /api/burgers/id
+        axios.put(`/api/burgers/${id}`)
+            .then(res => {
+                console.log('Update success.');
+                location.reload();
+            }), (err) => {
+                console.log(err);
+            }
+    }
+
 </script>
