@@ -14,7 +14,7 @@ const selectAll = func => {
 /**
  * calls insertOne passing in a callback function
  * @param {string} columns the SQL column names
- * @param {string} values the values to be inserted
+ * @param {array} values the values to be inserted
  * @param {function} func the callback function
  * @return void
  */
