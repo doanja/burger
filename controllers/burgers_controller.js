@@ -4,12 +4,10 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   burgers.selectAll(data => {
-    const obj = {
-      burgers: data
-    };
-    console.log("obj:", obj);
-
-    res.render("index", obj);
+    res.render("index", {
+      title: "Burgers Page",
+      data
+    });
   });
 });
 
@@ -25,17 +23,13 @@ router.post("/api/burgers", (req, res) => {
 
 // change this to post
 router.patch("/api/burgers/:id", (req, res) => {
-  burgers.updateOne(
-    { burger_name: req.body.burger_name },
-    "id = " + req.params.id,
-    data => {
-      if (data.changedRows === 0) {
-        // If no rows were changed, then the ID must not exist, so 404
-        return res.status(404).end();
-      }
-      res.status(200).end();
+  burgers.updateOne({ devoured: 1 }, "id = " + req.params.id, data => {
+    if (data.changedRows === 0) {
+      // If no rows were changed, then the ID must not exist, so 404
+      return res.status(404).end();
     }
-  );
+    res.status(200).end();
+  });
 });
 
 module.exports = router;
