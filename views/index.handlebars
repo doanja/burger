@@ -36,24 +36,6 @@
 
 {{!-- axios CDN --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-<script>
 
-    // click listener for devour buttons
-    $('.devour-button').click(function () {
-        const id = $(this).attr('id');
-        clickDevour(id);
-    })
-
-    // function to send a put request using axios
-    const clickDevour = (id) => {
-        // send put request to /api/burgers/id
-        axios.put(`/api/burgers/${id}`)
-            .then(res => {
-                console.log('Update success.');
-                location.reload();
-            }), (err) => {
-                console.log(err);
-            }
-    }
-
-</script>
+{{!-- scripts --}}
+<script src="/assets/scripts/scripts.js"></script>
