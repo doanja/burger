@@ -1,4 +1,4 @@
-const orm = require("../config/orm");
+const orm = require('../config/orm');
 
 /**
  * calls selectAll passing in a callback function
@@ -6,7 +6,7 @@ const orm = require("../config/orm");
  * @return void
  */
 const selectAll = func => {
-  orm.selectAll("burgers", res => {
+  orm.selectAll('burgers', res => {
     func(res);
   });
 };
@@ -19,7 +19,7 @@ const selectAll = func => {
  * @return void
  */
 const insertOne = (columns, values, func) => {
-  orm.insertOne("burgers", columns, values, res => {
+  orm.insertOne('burgers', columns, values, res => {
     func(res);
   });
 };
@@ -32,7 +32,19 @@ const insertOne = (columns, values, func) => {
  * @return void
  */
 const updateOne = (colValPairs, condition, func) => {
-  orm.updateOne("burgers", colValPairs, condition, res => {
+  orm.updateOne('burgers', colValPairs, condition, res => {
+    func(res);
+  });
+};
+
+/**
+ * call deleteOne passing in a callback function
+ * @param {string} condition the condition
+ * @param {function} func the callback function
+ * @return void
+ */
+const deleteOne = (condition, func) => {
+  orm.deleteOne('burgers', condition, res => {
     func(res);
   });
 };
@@ -40,5 +52,6 @@ const updateOne = (colValPairs, condition, func) => {
 module.exports = {
   selectAll: selectAll,
   insertOne: insertOne,
-  updateOne: updateOne
+  updateOne: updateOne,
+  deleteOne: deleteOne
 };

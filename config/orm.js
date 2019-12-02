@@ -1,4 +1,4 @@
-const initDBConnection = require("../config/connection");
+const initDBConnection = require('../config/connection');
 const connection = initDBConnection();
 
 /**
@@ -10,7 +10,7 @@ const printQuestionMarks = num => {
   var arr = [];
 
   for (var i = 0; i < num; i++) {
-    arr.push("?");
+    arr.push('?');
   }
 
   return arr.toString();
@@ -30,10 +30,10 @@ const objToSql = obj => {
     // check to skip hidden properties
     if (Object.hasOwnProperty.call(obj, key)) {
       // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
-      if (typeof value === "string" && value.indexOf(" ") >= 0) {
+      if (typeof value === 'string' && value.indexOf(' ') >= 0) {
         value = "'" + value + "'";
       }
-      arr.push(key + "=" + value);
+      arr.push(key + '=' + value);
     }
   }
 
@@ -66,9 +66,7 @@ const selectAll = (table, func) => {
  */
 const insertOne = (table, columns, values, func) => {
   connection.query(
-    `INSERT INTO ${table} (${columns.toString()}) VALUES (${printQuestionMarks(
-      values.length
-    )})`,
+    `INSERT INTO ${table} (${columns.toString()}) VALUES (${printQuestionMarks(values.length)})`,
     values,
     function(err, res) {
       if (err) throw err;
@@ -86,17 +84,32 @@ const insertOne = (table, columns, values, func) => {
  * @return void
  */
 const updateOne = (table, colValPairs, condition, func) => {
-  connection.query(
-    `UPDATE ${table} SET ${objToSql(colValPairs)} WHERE ${condition}`,
-    function(err, res) {
-      if (err) throw err;
-      func(res);
-    }
-  );
+  connection.query(`UPDATE ${table} SET ${objToSql(colValPairs)} WHERE ${condition}`, function(
+    err,
+    res
+  ) {
+    if (err) throw err;
+    func(res);
+  });
+};
+
+/**
+ * function to delete one row
+ * @param {string} table the table name
+ * @param {string} condition the condition
+ * @param {function} func the callback function
+ * @return void
+ */
+const deleteOne = (table, condition, func) => {
+  connection.query(`DELETE FROM ${table} WHERE ${condition}`, function(err, res) {
+    if (err) throw err;
+    func(res);
+  });
 };
 
 module.exports = {
   selectAll: selectAll,
   insertOne: insertOne,
-  updateOne: updateOne
+  updateOne: updateOne,
+  deleteOne: deleteOne
 };
