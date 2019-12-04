@@ -1,5 +1,4 @@
-const initDBConnection = require('../config/connection');
-const connection = initDBConnection();
+const connection = require('./connection');
 
 /**
  * helper function for SQL syntax.
